@@ -1,0 +1,12 @@
+{
+    "competitive-programming-helper.firstTime": false,
+    "files.associations": {
+        "*.cpp": "cpp",
+        "iostream": "cpp",
+        "*.tcc": "cpp",
+        "complex": "cpp",
+        "tuple": "cpp",
+        "functional": "cpp",
+        "type_traits": "cpp"
+    }
+}

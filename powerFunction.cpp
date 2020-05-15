@@ -21,6 +21,7 @@ int p(int x, int m)
 int main()
 {
     int x,m;
+    cout <<"here enter \n";
     cin >> x >> m;
     cout << p(x,m);
     return 0;
