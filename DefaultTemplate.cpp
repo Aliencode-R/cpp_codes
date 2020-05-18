@@ -19,10 +19,7 @@ using namespace std;
 #define sz(x) (int((x).size()))
 
 int main() {
-
-
-
-
     
     return 0;
 }
+
