@@ -1,0 +1,1 @@
+{"group":"local","interactive":false,"local":true,"memoryLimit":1024,"name":"Local: F","srcPath":"d:\\cpp_codes\\AtcoderAlsing\\F.cpp","tests":[{"id":1594534503293,"input":"2\n5\n1 5 100 500 1\n8\n2 3 4 5 6 7 8 92\n5\n1 5 100 500 1\n8\n2 3 4 5 6 7 8 9","output":"Case #1: 0\nCase #2: 1"}],"timeLimit":3000,"url":"d:\\cpp_codes\\AtcoderAlsing\\F.cpp"}

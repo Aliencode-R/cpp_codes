@@ -1,9 +1,3 @@
-// Default canlate: @Aliencode-R
-/*
-*
- If I have seen further it is only by standing on the shoulders of giants.
-*
-*/
 #include <bits/stdc++.h>
 using namespace std;
 #define read(type) readInt<type>() // Fast read
@@ -11,9 +5,7 @@ using namespace std;
 #define nL "\n"
 #define pb push_back
 #define mk make_pair
-#define pii pair<int, int>
-#define a first
-#define b second
+#define pii pair<ll, int>
 #define vi vector<int>
 #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
@@ -23,157 +15,194 @@ using namespace std;
 #define imin INT_MIN
 #define exp 1e9
 #define sz(x) (int((x).size()))
-int randomize()
-{
-	return (rand() % 6543);
-}
-ll helper(vector<ll> myvec, ll x, ll y, ll l, ll r);
 
-int makeSieve(int n) // sieve template
-{
+bool helper1(ll a, ll b, ll c, ll na, ll nb, ll nc) {
 
-	bool isPrime[n + 1];
-	for (int i = 0; i <= n; i++)
-	{
-		isPrime[i] = true;
+// case 1
+	if(b != 0 and nb % b == 0) {
+		ll m = nb / b;
+		ll x = nc - c;
+		// cout << m << x << endl;
+		if(m*(a+x) == na) {
+			return true;
+		}
 	}
-	isPrime[0] = false;
-	isPrime[1] = false;
-
-	for (int i = 2; i * i <= n; i++)
+	// cout << "pop";
+// case 2
+	if(b != 0 and nb % b == 0)
 	{
-		if (isPrime[i] == true)
+		ll m = nb / b;
+		if(a != 0 and c != 0 and
+		 na % a == 0 and nc % c == 0 and
+		  na / a == m and nc / c == m and
+		   na / a - a == nc / c - c ) {
+			return true;
+		}
+	}
+	
+// case 3 and 4 handled together
+	// first find x and m from A and B
+	// cout << "pop out  ";
+	// cout << (b * na - a * nb) << "    " << "    " << (nb - na) << "    "  << (b * na - a * nb) / (nb - na) << endl;
+	// cout << "(a * (nb - na))" << (a * (nb - na)) << endl;
+	if ((nb - na) != 0 and (b * na - a * nb) % (nb - na) == 0 and 
+	(b * na - a * na) != 0 and (na * (nb - na)) % (b * na - a * na) == 0)
+	{
+		// cout << "pop in";
+		ll x = (b * na - a * nb) / (nb - na);
+		ll m = (na * (nb - na) ) / (b * na - a * na);
+
+		// case 3 >>>
+		if (nc == c + x ) // TODO: EXTRA CONDITIONS HERE!
 		{
-			for (int j = i * i; j <= n; j += i)
-			{
-				isPrime[j] = false;
-			}
+			return true;
+		}
+
+		// case 4 >>>>
+		if (nc == m * (c + x))
+		{
+			return true;
+		}
+	}
+// cout << "poph1";
+	//if we reached here helper 1 was not so helpful after all lets go to helper 2 |
+	return false;
+}
+
+bool helper2(ll a, ll b, ll c, ll na, ll nb, ll nc) {
+
+	// case 1
+	if(b != 0 and nb % b == 0) {
+		ll m = nb / b;
+		ll x = nc - c;
+
+		if(m * a + x == na) {
+			return true;
+		} 
+	}
+// cout << "pop" ;
+	// case 2
+	if( b != 0 and nb % b == 0) {
+		ll m = nb / b;
+		if(na - m*a == nc - m*c) {
+			return true;
 		}
 	}
 
-	int count = 0;
-	for (int i = 0; i <= n; i++)
-	{
-		if (isPrime[i] == true)
+	// case 3 and 4 handled together
+
+	if ( (a - b) != 0 and (a * nb - b * na) % (a - b) == 0 and (na - nb) % (a - b) == 0) {
+
+		ll x = (a * nb - b * na) / (a - b);
+		ll m = (na - nb) / (a - b);
+
+		// case 3
+		if (nc == c + x)
 		{
-			count++;
+			return true;
+		}
+
+		// case 4
+		if (nc == m * c + x)
+		{
+			return true;
 		}
 	}
-	return count;
+
+	
+	//if we reached here helper 2 was not so helpful after all like helper 2
+	return false;
 }
-class trip // triplet template
-{
-public:
-	int a, b, c;
-};
+
 int main()
 {
-	ll t;
+	ll t; 
 	cin >> t;
-	while (t--)
-	{
-		ll x, y, l, r;
-		cin >> x >> y >> l >> r;
-		vector<ll> myvec;
-		if (x == 0 or y == 0)
-		{
-			cout << l << endl;
+	while(t--) {
+		ll a, b, c, na, nb, nc;
+		cin >> a >> b >> c >> na >> nb >> nc;
+		ll da = na - a;
+		ll db = nb - b;
+		ll dc = nc - c;
+
+// cout << "pop1";
+		// already set
+		if (da == 0 and db == 0 and dc == 0) {
+			cout << 0 << endl;
 			continue;
 		}
 
-		srand(time(NULL));
-
-		vector<ll> vect(10);
-
-		generate(vect.begin(), vect.end(), randomize);
-		// sort(vect.begin(),vect.end());
-		// cout << vect.size() << endl;
+		// 1 op -> 3 set
+// cout << "pop2";
+		if((da == db and db == dc) 
+		 or (da == db and dc == 0)  // 1 equal
+		  or (db == dc and da == 0)
+		   or (da == dc and db == 0)
+		    or (da == 0 and db == 0) // 2 equal
+			 or (db == 0 and dc == 0) 
+			  or (dc == 0 and da == 0) ){
 			
-		ll common_bits = (x | y);
-		if (common_bits >= l and common_bits <= r)
-		{
-			myvec.push_back(common_bits);
-			cout << common_bits << nL;
+			cout << 1 << endl;
 			continue;
 		}
-		for(int i = 0; i < (int)myvec.size(); i++)
+// cout << "pop3";
+		if ((a != 0 and b != 0 and c != 0 and nc % c == 0 and nb % b == 0 and na % a == 0 and na / a == nb / b and nb / b == nc / c) or 
+		(a != 0 and b != 0 and na % a == 0 and nb % b == 0 and na / a == nb / b and nc == c) or 
+		(a != 0 and c != 0 and na % a == 0 and nc % c == 0 and na / a == nc / c and nb == b) or 
+		(b != 0 and c != 0 and nc % c == 0 and nb % b == 0 and nb / b == nc / c and na == a))
 		{
-			myvec.push_back(myvec[i]);
+
+			cout << 1 << endl;
+			continue;
+		}
+// cout << "pop4";
+		// 1 op -> 2 set
+
+		if(da == db or db == dc or da == dc) {
+			cout << 2 << endl;
+			continue;
+		}
+		// cout << "pop4.3" ;
+		if((da != db and dc == 0) or (dc != db and da == 0) or (da != dc and db == 0))
+		{
+			cout << 2 << endl;
+			continue;
+		}
+// cout << "pop7";
+		if ((a != 0 and b != 0 and na % a == 0 and nb % b == 0 and na / a == nb / b) or
+			(c != 0 and b != 0 and nc % c == 0 and nb % b == 0 and nb / b == nc / c) or
+			(a != 0 and c != 0 and na % a == 0 and nc % c == 0 and na / a == nc / c))
+		{
+			cout << 2 << endl;
+			continue;
+		}
+// cout << "pop5";
+		if(helper1(a, b, c, na, nb, nc) or
+		helper1(a, c, b, na, nc, nb) or
+		helper1(b, a, c, nb, na, nc) or 
+		helper1(b, c, a, nb, nc, na) or 
+		helper1(c, a, b, nc, na, nb) or
+		helper1(c, b, a, nc, nb, na) )
+		{
+			cout << 2 << endl;
+			continue;
+		}
+// cout << "pop6";
+		if (helper2(a, b, c, na, nb, nc) or
+			helper2(a, c, b, na, nc, nb) or
+			helper2(b, a, c, nb, na, nc) or
+			helper2(b, c, a, nb, nc, na) or
+			helper2(c, a, b, nc, na, nb) or
+			helper2(c, b, a, nc, nb, na) )
+		{
+			cout << 2 << endl;
+			continue;
 		}
 
-		cout << helper(myvec,x,y,l,r)<<nL;
-	}
+			// cout << "here " << helper1(7,11,9,50,70,12) << endl;
 
+			//	3 op -> 3 set
+			cout << 3 << endl;			
+	}
 	return 0;
-}
-
-ll helper(vector<ll> myvec, ll x, ll y, ll l, ll r)
-{
-	bitset<63> bits(r);
-	ll maxPossibleAns = -1;
-	ll timeP = 0;
-	ll ans = l;
-	ll common_bits = (x | y);
-	ll myans = r & common_bits;
-	timeP = (x & myans) * (y & myans);
-	if (timeP >= maxPossibleAns)
-	{
-		maxPossibleAns = timeP;
-		ans = myans;
-		// cout< myans<<endl;
-	}
-	for (int i = 0; i < (int)myvec.size(); i++)
-	{
-		myvec.push_back(myvec[i]);
-	}
-	for (ll i = 0; i < 63; i++)
-	{
-		if (bits[i] == 0)
-		{
-			myvec.pop_back();
-			continue;
-		}
-		auto can = bits;
-		can[i] = 0;
-		int j = i - 1;
-
-		if (j >= 0)
-		{
-			for (; j >= 0; j--)
-			{
-				can[j] = 1;
-			}
-		}
-		ll possible = can.to_ullong();
-		sort(all(myvec));
-		timeP = (x & possible) * (y & possible);
-
-		if (timeP >= maxPossibleAns and (possible >= l and possible <= r))
-		{
-			if (timeP == maxPossibleAns)
-			{
-				ans = min(ans, possible);
-			}
-			else
-				ans = possible;
-			maxPossibleAns = timeP;
-		}
-		possible = (possible & common_bits);
-		timeP = (x & possible) * (y & possible);
-		if (timeP >= maxPossibleAns and (possible >= l and possible <= r))
-		{
-			if (timeP == maxPossibleAns)
-			{
-				ans = min(ans, possible);
-			}
-			else
-				ans = possible;
-			maxPossibleAns = timeP;
-		}
-	}
-	if (maxPossibleAns == 0)
-	{
-		return l;
-	}
-	return ans;
 }

@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
 int makeSieve(int n){
@@ -28,6 +28,7 @@ int makeSieve(int n){
 
 }
 int main(){
+	// cout << sqrt(5);
 	int n;
 	cin >> n;
 

@@ -1,0 +1,1 @@
+{"group":"local","interactive":false,"local":true,"memoryLimit":1024,"name":"Local: Autocomplete","srcPath":"d:\\cpp_codes\\Trie\\Autocomplete.cpp","tests":[{"id":1596065864725,"input":"4\npet\npeter\nrat\nrack\n5\npe\npet\nz\nrac\nrat","output":"pet\npeter\npet\npeter\nrack\nrat\nrack\nrat"}],"timeLimit":3000,"url":"d:\\cpp_codes\\Trie\\Autocomplete.cpp"}

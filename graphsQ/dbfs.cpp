@@ -19,7 +19,7 @@ using namespace std;
 #define sz(x) (int((x).size()))
 
 class graph{
-    map<int,uset<int>> adj;
+    map<int,set<int>> adj;
     public: 
         void addEdge(int u, int v, bool bidir = true)
         {

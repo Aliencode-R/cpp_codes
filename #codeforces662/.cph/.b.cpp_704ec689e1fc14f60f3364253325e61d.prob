@@ -1,0 +1,1 @@
+{"group":"local","interactive":false,"local":true,"memoryLimit":1024,"name":"Local: b","srcPath":"d:\\cpp_codes\\#codeforces662\\b.cpp","tests":[{"id":1596815428066,"input":"6\n1 1 1 2 1 1\n6\n+ 2\n+ 1\n- 1\n+ 2\n- 1\n+ 2\n","output":"NO\nYES\nNO\nNO\nNO\nYES\n"}],"timeLimit":3000,"url":"d:\\cpp_codes\\#codeforces662\\b.cpp"}
