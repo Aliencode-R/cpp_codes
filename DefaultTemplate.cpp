@@ -9,7 +9,7 @@ using namespace std;
 #define all(x) (x).begin(), (x).end()
 #define umap unordered_map 
 #define uset unordered_set 
-#define MOD 1000000007
+#define mod 1000000007
 #define imax INT_MAX
 #define imin INT_MIN
 #define exp 1e9
