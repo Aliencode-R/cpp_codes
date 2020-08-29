@@ -1,0 +1,1 @@
+{"group":"local","interactive":false,"local":true,"memoryLimit":1024,"name":"Local: a","srcPath":"d:\\cpp_codes\\cFeducationalContest 94\\a.cpp","tests":[{"id":1598366660439,"input":"4\n1\n1\n3\n00000\n4\n1110000\n2\n101\n","output":""}],"timeLimit":3000,"url":"d:\\cpp_codes\\cFeducationalContest 94\\a.cpp"}

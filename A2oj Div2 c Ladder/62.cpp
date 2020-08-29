@@ -19,32 +19,33 @@ using namespace std;
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int m; cin >> m;
-    int q[m];
-    int mn = INT_MAX;
-    for(int i = 0; i < m; i++) {
-        cin >> q[i];
-        mn = min(mn, q[i]);
-    }
+    string s; cin >> s;
+    int N = s.size();
     int n; cin >> n;
-    int arr[n];
+    umap<char,char> m;
     for(int i = 0; i < n; i++) {
-        cin >> arr[i];
+        string a; cin >> a;
+        char x = a[0];
+        char y = a[1];
+        m[x] = y;
+        m[y] = x;
     }
-    sort(arr, arr+n);
     int ans = 0;
-    for(int i = n-1; i >= 0; i--) {
-        if(i < mn) {
-            ans += arr[i];
-            continue;
+    for(int i = 0; i < N; i++) {
+        if(m.count(s[i]) == 0) continue;
+        char x = s[i];
+        char y = m[s[i]]; 
+        int c1 = 0;
+        int c2 = 0;
+        int j = i;
+        while(j < N and (s[j] == x or s[j] == y)) {
+            if(s[j] == x) c1++;
+            if(s[j] == y) c2++;
+            j++;
         }
-        for(int j = 0; j < mn; j++) {
-            ans += arr[i-j];
-        }
-        i -= mn;
-        i -= 1;
+        ans += min(c1, c2);
+        i = j-1;
     }
-    // cout << mn << " ";
-    std::cout << ans << endl;
+    cout << ans;
     return 0;
 }
