@@ -47,8 +47,8 @@ int main()
         graph[y].push_back(x);
     }
     int ans = n + 1;
-    // we have start bfs from every node , to get the correct ans 
-    // we only get the correct ans if the src node is in the 
+    // we have to start bfs from every node , to get the correct ans 
+    // we only get the correct ans - if the src node is in the 
     // cycle 
     for (int i = 1; i <= n; i++)
     {

@@ -3,7 +3,7 @@ using namespace std;
 // algo : order matrix- if a node x is reachable form node y 
 // then it comes before it.
 // if we reverse the graph and still the x is reachable from y
-// that means the are in cycle i.e. connected component
+// that means they are in cycle i.e. connected component
 
 // tc: O(n)
 
