@@ -19,29 +19,26 @@ using namespace std;
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n; cin >> n; 
-    int vals[n]; 
+    int n; cin >> n;
+    int vals[n], wt[n];
     for(int i = 0; i < n; i++) {
         cin >> vals[i];
     }
-    int wt[n];
     for (int i = 0; i < n; i++)
     {
         cin >> wt[i];
     }
-    int amt; cin >> amt; 
+    int amt; cin >> amt;
     int dp[n+1][amt+1];
     memset(dp, 0, sizeof dp);
-
     for(int i = 1; i <= n; i++) {
         for(int j = 1; j <= amt; j++) {
             dp[i][j] = dp[i-1][j];
-            if(j >= wt[i-1]) {
-                dp[i][j] = max(dp[i][j],vals[i-1] + dp[i-1][j-wt[i-1]]);
+            for(int k = 1; k*wt[i-1] <= j; k++) {
+                dp[i][j] = max(dp[i][j], k*vals[i-1] + dp[i-1][j - k*wt[i-1]]);
             }
         }
     }
     cout << dp[n][amt];
-
     return 0;
 }
