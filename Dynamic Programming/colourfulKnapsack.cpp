@@ -15,23 +15,32 @@ using namespace std;
 #define exp 1e9
 #define sz(x) (int((x).size()))
 #define int long long
+struct item {
+    int wt; 
+    int col;
+};
+bool compare(item a, item b) {
+    return a.col < b.col and a.wt < b.wt;
+}
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n; cin >> n;
-    int arr[n]; 
-    for(int i = 0; i < n; i++) cin >> arr[i];
-
-    int inc = arr[0], exc = 0;
-    for(int i = 1; i < n; i++) {
-        int ninc = arr[i] + exc;
-        int nexc = max(inc, exc);
-
-        inc = ninc; 
-        exc = nexc;
+    int n, m, x; cin >> n >> m >> x;
+    vector<int> arr[m]; 
+    item items[n];
+    for(int i = 0; i < n; i++){
+        cin >> items[i].wt;
     }
-    cout << max(inc, exc);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> items[i].col;
+    }
+    sort(items, items+n, compare);
+    int index = 0; 
+    while(index < n) {
+        // not able to do
+    }
 
     return 0;
 }

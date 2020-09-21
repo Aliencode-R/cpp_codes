@@ -19,19 +19,9 @@ using namespace std;
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n; cin >> n;
-    int arr[n]; 
-    for(int i = 0; i < n; i++) cin >> arr[i];
-
-    int inc = arr[0], exc = 0;
-    for(int i = 1; i < n; i++) {
-        int ninc = arr[i] + exc;
-        int nexc = max(inc, exc);
-
-        inc = ninc; 
-        exc = nexc;
-    }
-    cout << max(inc, exc);
-
+    int n, m; cin >> n >> m;
+    int arr[n][m];
+    int dp[m];
+    
     return 0;
 }

@@ -35,7 +35,7 @@ int helper(int i, int j) {
     if(dp[i][j] != -1) return dp[i][j];
 
     dp[i][j] = INT_MAX;
-    for(int k = i; k <= j; k++) {
+    for(int k = i; k < j; k++) {
         dp[i][j] = min(dp[i][j], helper(i,k) + helper(k+1, j) + sum(i,k) * sum(k+1,j));
     }
 

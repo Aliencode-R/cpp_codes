@@ -16,29 +16,22 @@ using namespace std;
 #define sz(x) (int((x).size()))
 #define int long long
 
-
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     string s; cin >> s;
-    int a = 0; // ending at a 
-    int b = 0; // at b
-    int c = 0; // at c
-
-    for(int i = 0; i < s.size(); i++) {
-        char ch = s[i];
-        if(ch == 'a') {
-            // append to previous a , dont append to prev a and start from this a
-            a = 2 * a + 1; 
-        } else if (ch == 'b') {
-            b = 2 * b + a;
-            // take previous b, dont take prev b and append b to prev a
-        } else if (ch == 'c') {
-            c = 2 * c + b;
+    int n = s.size();
+    int dp[n] = {};
+    int ans = 0;
+    for(int i = 1; i < n; i++) {
+        if(s[i] == '(') continue;
+        if(s[i-1] == '(') {
+            dp[i] = (i >= 2 ? dp[i-2] : 0) + 2;
+        } else if(i - dp[i-1] > 0 and s[i - dp[i-1] - 1] == '(') {
+            dp[i] = dp[i-1] + ((i - dp[i-1] >= 2 ? dp[i-dp[i-1] - 2] : 0) + 2);
         }
+        ans = max(ans, dp[i]);
     }
-
-    cout << c; // ending at c
-
+    cout << ans ;
     return 0;
 }
