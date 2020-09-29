@@ -7,7 +7,7 @@ using namespace std;
 #define pii pair<int, int>
 #define vi vector<int>
 #define all(x) (x).begin(), (x).end()
-#define umap unordered_map 
+#define umap unordered_map
 #define uset unordered_set 
 #define mod 1000000007
 #define imax INT_MAX
@@ -19,8 +19,16 @@ using namespace std;
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    string s; cin >> s; 
-    cout << s.substr(2) << endl;
-    cout << s.substr(1, 5);
+    int t; cin >> t;
+    while(t--) {
+        int n; cin >> n;
+        if(n == 1) {
+            cout << -1 << endl;
+            continue;
+        }
+        cout << 2;
+        for(int i = 0; i < n-1; i++) cout << 3 ;
+        cout << endl;
+    }
     return 0;
 }
