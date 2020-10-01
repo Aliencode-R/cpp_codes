@@ -2,7 +2,7 @@
 Coded in VScode.
 Questions are picked from sites like :
 
-  1. HackerRank
+  1. [HackerRank](https://www.hackerrank.com/)
   2. HackerEarth
   3. SPOJ
   4. CodeChef 
