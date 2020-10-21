@@ -37,6 +37,7 @@ public:
                 indegree[v]++;
             }
         }
+        
         //push all the nodes which have indegrees zero
         for (auto i : adj)
         {

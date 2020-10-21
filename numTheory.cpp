@@ -64,3 +64,14 @@ ll nCr(ll n, ll r, ll p)
         return 1;
     return (fac[n] * modInverse(fac[r], p) % p * modInverse(fac[n - r], p) % p) % p;
 }
+
+long long C(int n, int m) // ncr 2  
+{
+    long long result(1);
+    for (int i = 0; i < m; ++i)
+    {
+        result *= (n - i);
+        result /= (i + 1);
+    }
+    return result;
+}

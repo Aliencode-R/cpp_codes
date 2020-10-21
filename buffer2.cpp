@@ -1,70 +1,123 @@
- 
 #include <bits/stdc++.h>
-#define nn 100100
-#define yes "YES"
-#define no "NO"
- 
 using namespace std;
-int dp0[nn],dp1[nn];
-//dp0 is pre array, dp1 is suff array
-int main()
+#define endl "\n" 
+#define ll long long
+#define pb push_back
+#define mk make_pair
+#define pii pair<int, int>
+#define vi vector<int>
+#define all(x) (x).begin(), (x).end()
+#define umap unordered_map
+#define uset unordered_set 
+#define mod 1000000007
+#define imax INT_MAX
+#define imin INT_MIN
+#define exp 1e9
+#define sz(x) (int((x).size()))
+#define int long long
+
+int gcd(int a, int b)
 {
-    ios_base::sync_with_stdio(0);
-    int t;
-    cin>>t;
-    while(t--)
+    if (a == 0)
+        return b;
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+void multiply(int A[2][2], int M[2][2])
+{
+
+    int firstValue = (A[0][0] * M[0][0]) %mod+ (A[0][1] * M[1][0]) % mod;
+    int secondValue = (A[0][0] * M[0][1]) % mod + (A[0][1] * M[1][1]) % mod;
+    int thirdValue = (A[1][0] * M[0][0]) % mod + (A[1][1] * M[1][0]) % mod;
+    int fourthValue = (A[1][0] * M[0][1]) % mod + (A[1][1] * M[1][1]) % mod;
+
+    A[0][0] = firstValue % mod;
+    A[0][1] = secondValue % mod;
+    A[1][0] = thirdValue % mod;
+    A[1][1] = fourthValue % mod;
+}
+void power(int A[2][2], int n)
+{
+    if (n == 1)
     {
-        string s;
-        cin>>s;
-        int st=1,sr=1,n=s.length();
-        dp0[0]=1,dp1[n-1]=1;
-        for(int i=1;i<n;i++)
-        {
-            if(s[i]==s[i-1])
-            {
-                dp0[i]=dp0[i-1]^st^(st+1);
-                st++;
-            }
-            else
-            {
-                dp0[i]=dp0[i-1]^1;
-                st=1;
-            }
-            if(s[n-i]==s[n-i-1])
-            {
-                dp1[n-i-1]=dp1[n-i]^sr^(sr+1);
-                sr++;
-            }
-            else
-            {
-                dp1[n-i-1]=dp1[n-i]^1;
-                sr=1;
-            }
-        }
-        if(!dp0[n-1]) //if second kid wins without breaking string.
-        {
-            cout<<yes<<endl;
-            continue;
-        }
-        int flag=0;
-        for(int i=0;i<n-1;i++)
-        {
-            if(dp0[i]^dp1[i+1])
-                continue;
-            flag=1;break;
-        }
-		for(int i = 0; i < n; i++) {
-			cout << dp0[i] << " ";
-		}
-		cout << endl;
-		for (int i = 0; i < n; i++) {
-			cout << dp1[i] << " ";
-		}
-		cout << endl;
-		if (flag)
-            cout<<yes<<endl;
-        else
-            cout<<no<<endl;
+        return;
     }
+    power(A, n / 2);
+    multiply(A, A);
+    if (n % 2 != 0)
+    {
+        int F[2][2] = {{1, 1}, {1, 0}};
+        multiply(A, F);
+    }
+}
+int getFibonacci(int n)
+{
+    if (n == 0 || n == 1)
+    {
+        return n;
+    }
+    int A[2][2] = {{1, 1}, {1, 0}};
+    power(A, n - 1);
+    return A[0][0] % mod;
+}
+
+void buildTree(int *a, int s, int e, int *tree, int index)
+{
+    if (s == e)
+    {
+        tree[index] = a[s];
+        return;
+    }
+    int mid = (s + e) / 2;
+
+    buildTree(a, s, mid, tree, 2 * index);
+    buildTree(a, mid + 1, e, tree, 2 * index + 1);
+
+    tree[index] = gcd(tree[2 * index], tree[2 * index + 1]) % mod;
+
+    return;
+}
+
+int query(int *tree, int ss, int se, int qs, int qe, int index)
+{
+    if (qs <= ss and se <= qe)
+    {
+        return tree[index] % mod;
+    }
+    if (qe < ss or qs > se)
+    {
+        return -1;
+    }
+    int mid = (ss + se) / 2;
+    int left = query(tree, ss, mid, qs, qe, 2 * index);
+    int right = query(tree, mid + 1, se, qs, qe, 2 * index + 1);
+
+    if(left == -1 and right == -1) {
+        return -1;
+    }
+    if(left == -1) return right % mod;
+    if(right == -1) return left % mod;
+
+    return gcd(left, right) % mod;
+}
+
+int32_t main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, q; cin >> n >> q;
+    int arr[n];
+    for(int i = 0; i < n; i++) cin >> arr[i];
+    int *tree = new int[4*n+1];
+    buildTree(arr, 0, n-1, tree, 1);
+    while(q--) {
+        int l, r; cin >> l >> r;
+        cout << getFibonacci( query(tree, 0, n-1, l-1, r-1, 1) % mod ) % mod<< endl;
+    }
+    // for(int i = 0; i <= 4*n; i++) {
+    //     cout << i << ": " << tree[i] << endl;
+    // }
+
     return 0;
 }
