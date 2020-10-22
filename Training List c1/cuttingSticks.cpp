@@ -17,11 +17,15 @@ using namespace std;
 #define int long long
 
 int arr[52];
+int dp[55][55];
 
 int helper(int i, int j) {
-    if(i > j) return imax;
-    if(i + 1 == j) return 0;
-    int ret = imax;
+    // if(i > j) return imax;
+    int &ret = dp[i][j];
+    if(ret != -1) return ret;
+
+    if(i + 1 == j) return ret = 0;
+    ret = imax;
     for(int k = i+1; k < j; k++) {
         ret = min(ret, helper(i, k) + helper(k, j) + arr[j] - arr[i]);
     }
@@ -36,10 +40,11 @@ int32_t main() {
         if(total == 0) break;
         cin >> n ;
         // int arr[n];
+        memset(dp, -1, sizeof dp);
         arr[0] = 0;
         arr[n+1] = total;
         for(int i = 1; i <= n; i++) cin >> arr[i];
-        cout << "The minimum cutting is " << helper(0, n + 1) << endl;
+        cout << "The minimum cutting is " << helper(0, n + 1) << "." << endl;
     }
     return 0;
 }

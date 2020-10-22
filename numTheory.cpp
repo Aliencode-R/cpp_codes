@@ -75,3 +75,26 @@ long long C(int n, int m) // ncr 2
     }
     return result;
 }
+
+void findfactor(int n) // all factors 
+{
+    vector<int> v;
+    v.push_back(1);
+    for (int i = 2; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            if (i == (n / i))
+            {
+                v.push_back(i);
+            }
+            else
+            {
+                v.push_back(i);
+                v.push_back(n / i);
+            }
+        }
+    }
+    for (int i : v)
+        cout << i << " ";
+}
