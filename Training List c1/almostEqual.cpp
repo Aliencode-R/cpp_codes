@@ -19,17 +19,23 @@ using namespace std;
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n; cin >> n;
-    if(n == 0) {
-        cout << 1 << " " << 1 << endl << 1 << endl;
+    int n; cin >> n; 
+    if(n % 2 == 0) {
+        cout << "NO" ;
+        return 0;
     }
-    else {
-        cout << 3 << " " << 3 << endl;
-        int allone = (1 << 18) - 1;
-        int p17 = (1 << 17);
-        cout << allone << " " << allone << " " << p17 << endl;
-        cout << allone << " " << n << " " << p17 + n << endl;
-        cout << p17 << " " << p17 + n << " " << n << endl;
+    int *arr = new int[2*n + 1];
+    for(int i = 1; i <= n; i++) {
+        if(i & 1) {
+            arr[i] = 2*i-1;
+            arr[i+n] = 2*i;
+        } else {
+            arr[i] = 2*i;
+            arr[i+n] = 2*i-1;
+        }
     }
+    cout << "YES" << endl;
+    for(int i = 1; i <= 2*n; i++) cout << arr[i] << " " ;
+    // for(int )
     return 0;
 }

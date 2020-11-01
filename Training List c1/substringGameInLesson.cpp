@@ -19,17 +19,21 @@ using namespace std;
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n; cin >> n;
-    if(n == 0) {
-        cout << 1 << " " << 1 << endl << 1 << endl;
+    string s; cin >> s; 
+    int n = s.size();
+    string t(n, 'z');
+    t[0] = s[0];
+    // for(int i = 0; i < n; i++) t[i] = 'z';
+    for(int i = 1; i < n; i++) {
+        t[i] = min(s[i], t[i-1]);
     }
-    else {
-        cout << 3 << " " << 3 << endl;
-        int allone = (1 << 18) - 1;
-        int p17 = (1 << 17);
-        cout << allone << " " << allone << " " << p17 << endl;
-        cout << allone << " " << n << " " << p17 + n << endl;
-        cout << p17 << " " << p17 + n << " " << n << endl;
+    cout << "Mike" << endl;
+    for(int i = 1; i < n; i++) {
+        if(t[i-1] < s[i]) {
+            cout << "Ann" << endl;
+        } else {
+            cout << "Mike" << endl;
+        }
     }
     return 0;
 }

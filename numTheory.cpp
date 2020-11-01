@@ -98,3 +98,62 @@ void findfactor(int n) // all factors
     for (int i : v)
         cout << i << " ";
 }
+
+const int MAXN = 1e3 + 5;
+
+ll fact[MAXN];
+
+void init()
+{
+    fact[0] = 1;
+    for (int i = 1; i < MAXN; i++)
+        fact[i] = (fact[i - 1] % mod * i % mod) % mod;
+}
+
+ll fpow(ll x, ll y)
+{
+    ll res = 1;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res % mod * x % mod) % mod;
+        x = (x % mod * x % mod) % mod;
+        y = y / 2;
+    }
+    return res;
+}
+
+ll inv(ll a)
+{
+    return fpow(a, mod - 2);
+}
+
+ll ncr(int n, int r)
+{
+    if (n < r)
+        return 0;
+
+    ll ans = fact[n];
+    // nCr = n!/(n-r)!/r!
+    // nCr = n! * inv((n-r)!) * inv(r!)
+    ans = (ans % mod * inv(fact[n - r]) % mod) % mod;
+    ans = (ans % mod * inv(fact[r]) % mod) % mod;
+    return ans;
+}
+// prefix mex
+set<int> S;
+for (int i = 1; i <= no_of_elements; i++)
+{
+    S.insert(i);
+}
+
+vector<int> prefix_mex(no_of_elements + 1);
+for (int i = 1; i <= no_of_elements; i++)
+{
+    if (S.find(A[i]) != S.end())
+    {
+        S.erase(A[i]);
+    }
+
+    prefix_mex[i] = *(S.begin());
+}
