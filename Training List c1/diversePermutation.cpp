@@ -7,7 +7,7 @@
 using namespace __gnu_pbds;
 using namespace std;
 #define endl "\n" 
-#define debug(x) cerr << #x << "=" << x << endl;
+#define debug(x) cerr << #x << " " << x << endl;
 #define ll long long
 #define pii pair<int, int>
 #define vi vector<int>
@@ -25,30 +25,31 @@ using namespace std;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, 
         tree_order_statistics_node_update>
         pbds;
-struct razor_hash
-{
-    static uint64_t splitmix64(uint64_t x)
-    {
-        x += 0x9e3779b97f4a7c15;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-        return x ^ (x >> 31);
-    }
-    size_t operator()(uint64_t x) const
-    {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(x + FIXED_RANDOM);
-    }
-    size_t operator()(pair<int64_t, int64_t> Y) const
-    {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(Y.first * 31 + Y.second + FIXED_RANDOM);
-    }
-};
+
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int a; 
-    debug(a);
+    int n, k; cin >> n >> k;
+    int i = 1, j = n, count = 1;
+    int last = 0;
+    while(count < k) {
+        cout << i ++ << " ";
+        count++;
+        last = 0;
+        if(count < k) {
+            cout << j-- << " " ;
+            count++;
+            last = 1;
+        }
+    }
+    if(last == 0) {
+        for(int k = j; k >= i; k--) {
+            cout << k << " ";
+        }
+    } else {
+        for(int k = i; k <= j; k++) {
+            cout << k << " ";
+        }
+    }
     return 0;
 }

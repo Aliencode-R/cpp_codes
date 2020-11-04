@@ -54,7 +54,7 @@ vector<bool> primeSieve(ll n)
 vector<ll> prime_numbers()
 {
     vector<bool> p = primeSieve(1E6);
-    vector<ll> primes;
+    // vector<ll> primes;
     primes.push_back(2);
 
     for (ll i = 3; i < 1E6; i++)
@@ -67,22 +67,29 @@ vector<ll> prime_numbers()
     return primes;
 }
 
-unordered_set<ll> divisors(ll n)
+set<ll> divisors(ll n)
 {
-    unordered_set<ll> div;
+    set<ll> div;
     div.insert(1);
+    // for (int i = 0; i < 20; i++)
+    //     cout << primes[i] << ",";
+    // cout << endl;
     for (ll i = 0; primes[i] <= sqrt(n); ++i)
     {
         if (n % primes[i] == 0)
         {
             ll num = n;
             div.insert(primes[i]);
-
-            while (num)
+            cout << primes[i] << ": " ;
+            while (num and n % num == 0)
             {
-                num /= primes[i];
                 div.insert(num);
+                num /= primes[i];
+                cout << num << ",";
             }
+            cout << endl;
+            // div.insert(primes[i]);
+            // div.insert(n / primes[i]);
         }
     }
     return div;
@@ -114,13 +121,17 @@ int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     primes = prime_numbers();
+    cout << endl;
     int n; cin >> n; 
-    uset<int> s = divisors(n);
+    set<int> s = divisors(n);
     vector<int> v;
     findfactor(n, v);
     sort(all(v));
     for(int x : s) cout << x << " " ;
     cout << endl;
     for(int x : v) cout << x << " ";
+// #ifdef LOCAL_DEFINE
+    cerr << "Time elapsed: " << 1.0 * clock() / CLOCKS_PER_SEC << " s.\n";
+// #endif
     return 0;
 }
