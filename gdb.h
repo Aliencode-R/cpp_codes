@@ -1,3 +1,4 @@
+
 void __print(long x) { cerr << x; }
 void __print(long long x) { cerr << x; }
 void __print(unsigned x) { cerr << x; }

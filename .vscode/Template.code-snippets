@@ -32,21 +32,43 @@
 			"#define imin INT_MIN",
 			"#define inf 1e9",
 			"#define infl 1e18",
+			"#define sz(x) ((int)x.size())",
 			"#define int long long",
 			"",
 			"typedef tree<int, null_type, less_equal<int>, rb_tree_tag, ",
 			"        tree_order_statistics_node_update>",
 			"        pbds;",
 			"",
+			"void solve () {",
+			"",
+			"}",
+			"",
 			"int32_t main() {",
 			"    ios_base::sync_with_stdio(false);",
 			"    cin.tie(NULL);",
 			"    ",
+			"\tint t;",
+			"\tt = 1;",
+			"\tcin >> t;",
+			"\twhile(t--) {",
+			"\t\tsolve();",
+			"\t}",
 			"    return 0;",
 			"}",
 		],
 		"description": "Default Template"
 	}
+}
+
+void solve () {
+
+}
+
+int t; 
+t = 1;
+cin >> t;
+while(t--) {
+	solve();
 }
 
 
