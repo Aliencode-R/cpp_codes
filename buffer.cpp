@@ -1,29 +1,36 @@
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx,avx2,fma")
+#pragma GCC optimization ("unroll-loops")
 #include <bits/stdc++.h>
-#define ll long long int
-#define ld long double
-#define pi pair<int, int>
-#define all(x) x.begin(), x.end()
-#define allr(x) x.rbegin(), x.rend()
-#define sz(x) ((int)x.size())
-#define ln(x) ((int)x.length())
-#define mp make_pair
-#define pb push_back
-#define ff first
-#define ss second
-#define endl '\n'
-#define dbg(x) cout << #x << " " << x << endl
-#define clr(x, v) memset(x, v, sizeof(x))
-#define FASTIO                        \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL);
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
 using namespace std;
-const double eps = 1e-9;
-const double PI = acos(-1.0);
-const ll mod = 1e9 + 7;
-const int MAXN = 1e6 + 5;
+#define endl "\n" 
+#define debug(x) cerr << #x << " = " << x << endl;
+#define ll long long
+#define pii pair<int, int>
+#define vi vector<int>
+#define all(x) (x).begin(), (x).end()
+#define rall(x) (x).rbegin(), (x).rend()
+#define umap unordered_map
+#define uset unordered_set 
+#define mod 1000000007
+#define imax INT_MAX
+#define imin INT_MIN
+#define f first
+#define s second
+#define pb push_back
+#define mp make_pair
+// #define inf 1e9
+#define infl 1e18
+#define sz(x) ((int)x.size())
+#define int long long
 
-void __print(long x) { cerr << x; }
+void __print(long x)
+{
+    cerr << x;
+}
 void __print(long long x) { cerr << x; }
 void __print(unsigned x) { cerr << x; }
 void __print(unsigned long x) { cerr << x; }
@@ -71,55 +78,75 @@ void _print(T t, V... v)
 #define deb(x...)
 #endif
 
-void cp()
+typedef tree<int, null_type, less_equal<int>, rb_tree_tag, 
+        tree_order_statistics_node_update>
+        pbds;
+
+const int maxn = 200500;
+const int inf = (2e9) + 2;
+
+vector<pair<pair<int, int>, pair<int, int>>> queries;
+vi bestCost(maxn);
+
+int l[maxn];
+int r[maxn];
+int cost[maxn];
+
+int solution(int n, int needLen)
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> arr(n);
-    for (int &x : arr)
-        cin >> x;
-    vector<int> need(k);
-    for (int &x : need)
-        cin >> x;
-    sort(allr(arr));
-    sort(all(need));
-    int pos = 0;
-    ll sum = 0;
-    vector<int> left;
-    for (int i = 0; i < k; i++)
+    queries.clear();
+    for (int j = 0; j < n; j++)
     {
-        if (need[i] == 1)
-        {
-            sum += arr[pos] * 2LL;
-        }
-        else
-        {
-            sum += arr[pos];
-            left.pb(need[i] - 1);
-        }
-        pos++;
+        queries.pb(mp(mp(l[j], -1), mp(r[j], cost[j])));
+        queries.pb(mp(mp(r[j], 1), mp(l[j], cost[j])));
     }
-    sort(allr(left));
-    // for(int i : left) cout << i << "," ;
-    cout << endl;
-    pos = n - 1;
-    for (int i : left)
+    for (int j = 0; j < maxn; j++)
+        bestCost[j] = inf;
+    ll ans = 2LL * inf;
+    sort(queries.begin(), queries.end());
+    // deb(queries);
+    int sz = queries.size();
+    for (int j = 0; j < sz; j++)
     {
-        sum += arr[pos];
-        pos -= i;
+        int type = queries[j].f.s;
+        // lr 
+        if (type == -1)
+        {
+            int curLen = queries[j].s.f - queries[j].f.f + 1;
+            if (curLen <= needLen)
+                ans = min(ans, 1LL * queries[j].s.s + 1LL * bestCost[needLen - curLen]);
+        }
+        // rl
+        if (type == 1)
+        {
+            int curLen = queries[j].f.f - queries[j].s.f + 1;
+            bestCost[curLen] = min(bestCost[curLen], queries[j].s.s);
+        }
+        // deb(j, type, ans);
     }
-    cout << sum << endl;
+    // deb(bestCost);
+
+    return ans >= inf ? -1 : ans;
 }
 
-int main()
-{
-    FASTIO;
+
+void solve () {
+    int n, x; cin >> n >> x; 
+    for(int i = 0; i < n; i++) { 
+        cin >> l[i] >> r[i] >> cost[i];
+    }
+    cout << solution(n, x) << endl;
+}
+
+int32_t main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
     int t;
     t = 1;
-    cin >> t;
-    while (t--)
-    {
-        cp();
+    // cin >> t;
+    while(t--) {
+        solve();
     }
     return 0;
 }

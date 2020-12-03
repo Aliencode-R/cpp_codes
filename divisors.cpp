@@ -120,15 +120,15 @@ void findfactor(int n, vector<int> &v)
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    primes = prime_numbers();
-    cout << endl;
+    // primes = prime_numbers();
+    // cout << endl;
     int n; cin >> n; 
-    set<int> s = divisors(n);
+    // set<int> s = divisors(n);
     vector<int> v;
     findfactor(n, v);
     sort(all(v));
-    for(int x : s) cout << x << " " ;
-    cout << endl;
+    // for(int x : s) cout << x << " " ;
+    // cout << endl;
     for(int x : v) cout << x << " ";
 // #ifdef LOCAL_DEFINE
     cerr << "Time elapsed: " << 1.0 * clock() / CLOCKS_PER_SEC << " s.\n";
